@@ -1,0 +1,123 @@
+﻿@*Index des sujets par catégorie*@
+
+@using W24_TP2.Tools
+@using System.Security.Claims
+@using W24_TP2.ViewModels
+@using W24_TP2.Models
+
+@model PaginatedList<W24_TP2.ViewModels.MonSujet>
+@*@model IEnumerable<W24_TP2.Models.Sujet>*@
+
+@{
+    ViewData["Title"] = "Index sujets par catégorie";
+}
+<h1 class="titre-page">Index sujets par catégorie</h1>
+@*asp-route-MsgId="@(Model.FirstOrDefault()?.MsgId)"*@
+<div class="container-btn-nouveau">
+    @if (User.Identity.IsAuthenticated || User.IsInRole("zeMasterAdmin"))
+    {
+        <a class="btn btn-secondary btn-color btn-nouveau" asp-action="Create" asp-route-CatId="@Model.FirstOrDefault()?.CatId">Créer un nouveau sujet ici</a>
+    }
+</div>
+<div class="row justify-content-lg-center">
+
+    @foreach(var item in Model)
+    {
+        @if (User.IsInRole("zeMasterAdmin"))
+        {           
+                <div class="card mt-3 card-page-suj">
+                    <div class="card-body">
+                        <p class="card-subtitle mb-2 text-muted">@item.UserName</p>
+                        <p class="card-subtitle mb-2 text-muted">@item.UserId</p>
+                        <div>
+                            <h6 class="card-title">@Html.Raw(@item.SujetTexte)</h6>
+                        </div>
+                        <div class="container-btn-nouveau">
+                            <a class="btn btn-secondary btn-margin btn-color" asp-action="Index_mess_par_suj" asp-controller="Messages" asp-route-id="@item.SujetId" >Consulter les messages ici</a>
+                        </div>
+                        <p class="card-subtitle mb-2 text-muted text-center">Date de création:@item.SujetDate</p>                        
+                        <p class="card-subtitle mb-2 text-muted text-center">Dernière réponse: @item.DerniereRep</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Dernier usager: @item.DernierUsager</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Nombre de messages: @item.NbrMessages</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Nombres de vues: @item.SujetView</p> 
+                        <p class="card-subtitle mb-2 text-muted text-center">Sujet Id:@item.SujetId</p>
+                            <div class="container-btn-ed-del"> 
+                                <a class="btn btn-secondary cat-btn2 btn-color" asp-controller="Sujets" asp-action="Edit" asp-route-CatId="@item.CatId" asp-route-UserId="@User.FindFirstValue(ClaimTypes.NameIdentifier)" asp-route-SujetId="@item.SujetId">Edit</a>
+                                <a class="btn btn-secondary cat-btn2 btn-color" asp-controller="Sujets" asp-action="Delete" asp-route-CatId="@item.CatId" asp-route-UserId="@User.FindFirstValue(ClaimTypes.NameIdentifier)" asp-route-SujetId="@item.SujetId">Delete</a>
+                            </div>                       
+                    </div>
+                </div>           
+        }
+        else if (@item.SujetActif == true)
+        {           
+            @if (User.Identity.IsAuthenticated)
+            {
+                <div class="card mt-3 card-page-suj">
+                    <div class="card-body">                       
+                        <p class="card-subtitle mb-2 text-muted">@item.UserName</p>                        
+                        <div>
+                            <p class="card-title">@Html.Raw(@item.SujetTexte)</p>
+                        </div>                        
+                        <div class="container-btn-nouveau">
+                            <a class="btn btn-secondary cat-btn btn-margin btn-color" asp-action="Index_mess_par_suj" asp-controller="Messages" asp-route-id="@item.SujetId">Consulter les messages ici</a>
+                        </div>
+                        <p class="card-subtitle mb-2 text-muted text-center">Date de création:@item.SujetDate</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Dernière réponse: @item.DerniereRep</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Dernier usager: @item.DernierUsager</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Nombre de messages: @item.NbrMessages</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Nombres de vues: @item.SujetView</p>    
+                        @if (User.FindFirstValue(ClaimTypes.NameIdentifier) == @item.UserId)
+                        {
+                            <div class="container-btn-ed-del"> 
+                                <a class="btn btn-secondary cat-btn2 btn-color" asp-controller="Sujets" asp-action="Edit" asp-route-CatId="@item.CatId" asp-route-UserId="@User.FindFirstValue(ClaimTypes.NameIdentifier)" asp-route-SujetId="@item.SujetId">Edit</a>
+                                <a class="btn btn-secondary cat-btn2 btn-color" asp-controller="Sujets" asp-action="Delete" asp-route-CatId="@item.CatId" asp-route-UserId="@User.FindFirstValue(ClaimTypes.NameIdentifier)" asp-route-SujetId="@item.SujetId">Delete</a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="card mt-3 card-page-suj">
+                    <div class="card-body">                       
+                        <p class="card-subtitle mb-2 text-muted">@item.UserName</p> 
+                        <div>
+                            <h6 class="card-title">@Html.Raw(@item.SujetTexte)</h6>
+                        </div>                        
+                        <div class="container-btn-nouveau">
+                            <a class="btn btn-secondary cat-btn btn-margin btn-color" asp-action="Index_mess_par_suj" asp-controller="Messages" asp-route-id="@item.SujetId">Consulter les messages ici</a>
+                        </div>
+                        <p class="card-subtitle mb-2 text-muted text-center">Date de création:@item.SujetDate</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Dernière réponse: @item.DerniereRep</p> 
+                        <p class="card-subtitle mb-2 text-muted text-center">Dernier usager: @item.DernierUsager</p> 
+                        <p class="card-subtitle mb-2 text-muted text-center">Nombre de messages: @item.NbrMessages</p>
+                        <p class="card-subtitle mb-2 text-muted text-center">Nombres de vues: @item.SujetView</p>    
+                    </div>
+                </div>        
+            }
+        }
+
+        
+    }
+
+       @*Navigation*@
+    @{
+        var precedentDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var suivantDisabled = !Model.HasNextPage ? "disabled" : "";
+    }
+    <div class="text-center container justify-content-sm-center"> 
+    @*first*@
+   <a class="btn btn-secondary cat-btn2 btn-nav btn-color @precedentDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="1" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Première</a>
+    @*Previous*@  
+    <a class="btn btn-secondary cat-btn2 btn-nav btn-color @precedentDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.PageIndex-1)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Précédente</a>
+    @for(int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a class="text-grey" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(i)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">@(i)</a>
+    }
+    @*Next*@
+    <a class="btn btn-secondary cat-btn2 btn-nav btn-color @suivantDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.PageIndex+1)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Suivante</a>
+    @*last*@
+    <a class="btn btn-secondary cat-btn2 btn-nav btn-color @suivantDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.TotalPages)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Dernière</a>
+    </div>
+</div>
+

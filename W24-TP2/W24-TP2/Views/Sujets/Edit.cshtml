@@ -1,0 +1,74 @@
+﻿@*@model W24_TP2.ViewModels.MonSujet*@
+@model W24_TP2.Models.Sujet
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Sujet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="SujetId" />
+            <input type="hidden" asp-for="CatId" />
+            <input type="hidden" asp-for="UserId" />         
+            <div class="form-group">
+                <label asp-for="SujetTexte" class="control-label"></label>
+                <textarea asp-for="SujetTexte" class="form-control" ></textarea>
+                <span asp-validation-for="SujetTexte" class="text-danger"></span>
+            </div>
+            @*On permet à l'admin d'avoir accés à l'édition des sujets même si ce n'est pas lui qui l'a écrit. 
+            Les utilisateurs peuvent écrire des sujets hors catégories*@
+            @if (User.IsInRole("zeMasterAdmin"))
+            {
+                @*On permet à l'admin d'avoir accès au changement du CatId au cas ou le sujet ne serait pas dans la bonne catégorie*@
+               <div class="form-group">
+                    <label asp-for="CatId" class="control-label"></label>
+                    <input asp-for="CatId"  value="@ViewData["CatId"]" class="form-control"/>
+                    <span asp-validation-for="CatId" class="text-danger"></span>
+                </div>
+                @*On permet à l'admin de voir le userId directement sans avoir à aller sur la BD il me semble que ça peut être pratique*@
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <input asp-for="UserId" value="@ViewData["UserId"]" class="form-control"/>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>
+                @*On permet à l'admin d'avoir accès au changement de la date*@
+                <div class="form-group">
+                    <label asp-for="SujetDate" class="control-label"></label>
+                    <input asp-for="SujetDate" class="form-control" />
+                    <span asp-validation-for="SujetDate" class="text-danger"></span>
+                </div>
+                @*On permet à l'admin d'avoir accès au changement du nombre de vue*@
+                <div class="form-group">
+                    <label asp-for="SujetView" class="control-label"></label>
+                    <input asp-for="SujetView" class="form-control" />
+                    <span asp-validation-for="SujetView" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    @*On permet à l'admin de mettre le sujet inactif*@
+                    <label class="form-check-label">
+                    <input class="form-check-input" asp-for="SujetActif" /> @Html.DisplayNameFor(model => model.SujetActif)
+                </label>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-secondary cat-btn2 btn-color" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @*je comprends pas pourtant j'ai le CatId et le sujetId dans l'url et par defaut si null le page index à 1 mais ça m'amène à une page sans sujet??? 
+    Au moins ça plante pas probablement la page index qui n'est pas dans le modèle créer un problème?...*@
+    <a class="text-grey" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-CatId="@ViewData["CatId"]" asp-route-SujetId="@ViewData["SujetId"]">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

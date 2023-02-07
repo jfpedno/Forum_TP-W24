@@ -1,0 +1,41 @@
+﻿@model W24_TP2.Models.Category
+
+<h1 class = "text-grey">Supprimer</h1>
+
+<h3 class = "text-grey">Voulez-vous supprimer cette catégorie ?</h3>
+<div>
+    <h4 class = "text-grey">Catégorie</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Catégorie
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CatNom)
+        </dd>
+        <dt class = "col-sm-2">
+            Description
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.Raw(@Model.CatDescription)
+        </dd>
+        <dt class = "col-sm-2">
+             @Html.DisplayNameFor(model => model.CatId)
+        </dt>
+        <dd class = "col-sm-10">
+             @Html.DisplayFor(model => model.CatId)
+        </dd>
+        <dt class = "col-sm-2">
+             @Html.DisplayNameFor(model => model.CatActif)
+        </dt>
+        <dd class = "col-sm-10">
+             @Html.DisplayFor(model => model.CatActif)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="CatId" />
+        <input type="submit" value="Delete" class="btn btn-danger-me" /> |
+        <a class="text-grey" asp-action="Index">Back to List</a>
+    </form>
+</div>

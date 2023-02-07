@@ -1,0 +1,94 @@
+﻿@*@model IEnumerable<W24_TP2.Models.Sujet>*@
+
+@*Index des sujets par catégorie*@
+
+@using W24_TP2.Tools
+@using System.Security.Claims
+@*@using W24_TP2.ViewModels*@
+
+@model PaginatedList<W24_TP2.Models.Sujet>
+@{
+    ViewData["Title"] = "Index sujets par catégorie";
+}
+<h1 class="titre-page">Index sujets par catégorie</h1>
+<div container-btn>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <a class="btn btn-secondary btn-color btn-nouveau" asp-action="Create" asp-route-SujetId="@Model.First().SujetId" asp-route-CatId="@Model.First().CatId">Créer un nouveau sujet ici</a>
+    }
+</div>
+<div class="row justify-content-lg-center">
+
+    @foreach(var item in Model)
+    {
+        @if (@item.SujetActif == true)
+        {
+            <div class="card mt-3 card-page-suj">
+                <div class="card-body">
+                    @*<h4 class="card-subtitle mb-2">@item.CatNom</h4>*@
+                    <h4 class="card-subtitle mb-2">@item.CatId</h4>
+                    @*<h6 class="card-subtitle mb-2 text-muted">@item.UserName</h6> *@
+                    <h5 class="card-title">@Html.Raw(@item.SujetTexte)</h5>
+                    <a class="btn btn-secondary btn-margin btn-color" asp-action="Index_mess_par_suj" asp-controller="Messages" asp-route-id="@item.SujetId">Consulter les messages ici</a>
+                    <h6 class="card-subtitle mb-2 text-muted">@item.SujetDate</h6>
+                    <h6 class="card-subtitle mb-2 text-muted">Nombres de vues: @item.SujetView</h6>
+                    @*<h6 class="card-subtitle mb-2 text-muted">Nombre de messages: @item.NbrMessages</h6>*@
+                    <h6 class="card-subtitle mb-2 text-muted">ID: @item.SujetId</h6>
+                    @if (User.Identity.IsAuthenticated)
+                    @*@if (User.UserId == UserId)*@
+                    {
+                        <a class="btn btn-secondary cat-btn2 btn-color" asp-action="Edit" asp-route-id="@item.SujetId">Edit</a>
+                        @*<a class="btn btn-secondary cat-btn2 btn-color" asp-action="Details" asp-route-id="@item.SujetId">Details</a>*@
+                        <a class="btn btn-secondary cat-btn2 btn-color" asp-action="Delete" asp-route-id="@item.SujetId">Delete</a>
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            @if (User.IsInRole("zeMasterAdmin"))
+            {
+                <div class="card mt-3 " style="width: 18rem;">
+                    <div class="card-body">
+                        @*<h4 class="card-subtitle mb-2">@item.CatNom</h4>*@
+                        <h4 class="card-subtitle mb-2">@item.CatId</h4>
+                        @*<h6 class="card-subtitle mb-2 text-muted">@item.UserName</h6> *@
+                        <h6 class="card-subtitle mb-2 text-muted">@item.UserId</h6> 
+                        <h5 class="card-title">@Html.Raw(@item.SujetTexte)</h5>
+                        <a class="btn btn-secondary cat-btn btn-margin btn-color" asp-action="Index_mess_par_suj" asp-controller="Messages" asp-route-id="@item.SujetId">Consulter les messages ici</a>
+                        <h6 class="card-subtitle mb-2 text-muted">@item.SujetDate</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Nombres de vues: @item.SujetView</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Sujet actif: @item.SujetActif</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">ID: @item.SujetId</h6> 
+                        <a class="btn btn-secondary cat-btn2 btn-color" asp-action="Edit" asp-route-id="@item.SujetId">Edit</a>
+                        <a class="btn btn-secondary cat-btn2 btn-color" asp-action="Details" asp-route-id="@item.SujetId">Details</a>
+                        <a class="btn btn-secondary cat-btn2 btn-color" asp-action="Delete" asp-route-id="@item.SujetId">Delete</a>
+                    </div>
+                </div>
+            }
+        }
+    }
+
+       @*Navigation*@
+    @{
+        var precedentDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var suivantDisabled = !Model.HasNextPage ? "disabled" : "";
+
+    }
+    <div class="text-center container justify-content-sm-center"> 
+    @*first*@
+   <a class="btn btn-secondary cat-btn2 btn-nav btn-color @precedentDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="1" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Première</a>
+    @*Previous*@  
+    <a class="btn btn-secondary cat-btn2 btn-nav btn-color @precedentDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.PageIndex-1)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Précédente</a>
+    @for(int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a class="text-grey" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(i)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">@(i)</a>
+    }
+    @*Next*@
+    <a class="btn btn-secondary cat-btn2 btn-nav btn-color @suivantDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.PageIndex+1)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Suivante</a>
+    @*last*@
+    <a class="btn btn-secondary cat-btn2 btn-nav btn-color @suivantDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.TotalPages)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Dernière</a>
+    </div>
+</div>
+
+

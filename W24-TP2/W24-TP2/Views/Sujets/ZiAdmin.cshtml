@@ -1,0 +1,57 @@
+﻿@*Vue pour ZiAdmin*@
+
+@using W24_TP2.Tools
+@using System.Security.Claims
+@using W24_TP2.ViewModels
+@using W24_TP2.Models
+@*@model W24_TP2.ViewModels.ZiAdmin*@
+
+@*@model PaginatedList<W24_TP2.ViewModels.ZiAdmin>*@
+@model IEnumerable<W24_TP2.ViewModels.ZiAdmin>
+
+<h1 class="titre-page">Index de ZiAdmin</h1>
+
+<div class="row justify-content-lg-center">
+
+    @foreach(var item in Model)
+    {
+        @if (User.IsInRole("zeMasterAdmin"))
+        {
+            <div class="card mt-3 card-page-suj">
+                <div class="card-body">
+                    <p class="card-subtitle mb-2 text-muted">@item.UserName</p>
+                    <p class="card-subtitle mb-2 text-muted">Nombre de sujets: @item.NbrSujets</p>
+                    <p class="card-subtitle mb-2 text-muted">Nombres de messages: @item.NbrMessages</p>
+                    <p class="card-subtitle mb-2 text-muted">Dernière activité: un bo gros 0 finalement! @item.DerniereActivite</p>
+                </div>
+            </div>
+        }
+        else
+        {
+
+        }
+    }
+
+       @*Navigation*@
+@*    @{
+        var precedentDisabled = !Model.HasPreviousPage ? "disabled" : "";
+        var suivantDisabled = !Model.HasNextPage ? "disabled" : "";
+
+    }
+    <div class="text-center container justify-content-sm-center"> *@
+    @*first*@
+  @* <a class="btn btn-secondary cat-btn2 btn-nav btn-color @precedentDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="1" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Première</a>*@
+    @*Previous*@  
+    @*<a class="btn btn-secondary cat-btn2 btn-nav btn-color @precedentDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.PageIndex-1)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Précédente</a>
+    @for(int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a class="text-grey" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(i)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">@(i)</a>
+    }*@
+    @*Next*@
+   @* <a class="btn btn-secondary cat-btn2 btn-nav btn-color @suivantDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.PageIndex+1)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Suivante</a>*@
+    @*last*@
+    @*<a class="btn btn-secondary cat-btn2 btn-nav btn-color @suivantDisabled" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-pageIndex="@(Model.TotalPages)" asp-route-id="@(Model.FirstOrDefault()?.CatId)">Dernière</a>
+    </div>*@
+</div>
+
+

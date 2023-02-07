@@ -1,0 +1,175 @@
+
+.btn-nouveau {
+    width: 20Rem;
+}
+
+.btn-margin {
+    margin-bottom: 20px;
+}
+
+.btn-color:hover {
+    background-color: #197d93;
+    color: #fff;
+    border-color: #324c55;
+}
+
+.btn-color {
+    background-color: #547885;
+    color: #fff;
+    border-color: #324c55;
+}
+
+.btn-nav {
+    height: 40px;
+    width: 110px;
+    margin-top: 20px;
+    background-color: #3c5660;
+}
+
+.text-grey:hover {
+    color: #273034;
+}
+
+.text-grey {
+    color: dimgrey;
+}
+
+.text-grey-blue {
+    color: #273034; 
+}
+
+header.masthead {
+    padding-top: 10.5rem;
+    padding-bottom: 6rem;
+    text-align: center;
+    color: #fff;
+    background-image: url("../assets/img/fond.jpg");
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-position: center center;
+    background-size: cover;
+}
+
+.img-margin-top {
+    margin-top: 0px;
+}
+
+.img-round {
+    height : 75px; 
+    width : 75px;
+}
+
+.texte-center {
+    text-align: center;
+    margin-right: 1Rem;
+}
+
+.textarea-create-suj {
+    width: 40rem;
+}
+
+.textarea-create-catId {
+    width: 10rem;
+}
+
+.textarea-create-cat2 {
+    width: 40rem;
+}
+
+.textarea-create-cat {
+    width: 20rem;
+}
+
+.textarea-edit {
+    width: 40rem;
+}
+
+.textarea-edit-cat {
+    width: 20rem;
+}
+.carte-width {
+    display: flex;
+    flex-direction: column;
+    min-width: 200px;
+    word-wrap: break-word;
+    background-color: #8eb0bb;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+}
+
+.carte-body {
+    flex: 200px;
+    padding: 1rem 1rem;
+}
+
+.card-page-cat {
+    width: 19rem;
+}
+
+.card-page-suj {
+    width: 25rem;
+}
+
+.card-page-mess {
+    margin: 0;
+    width: 61rem;
+
+}
+
+.card-mess-margin {
+    margin-left: 5Rem;
+    margin-right: 5Rem;
+}
+
+.titre-page {
+    text-align: center;
+}
+
+.margin-register {
+    margin-left: 15px;
+}
+
+text-white-50:hover {
+    color:#fff;
+    opacity:1;
+}
+
+.container-btn-nouveau {
+    display: flex;
+    justify-content: center;
+}
+
+.container-btn-ed-del {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+}
+.margin-btn-mess-del {
+    margin-right: 5Rem; 
+    margin-left: 5Rem;
+}
+
+.margin-mess-del {
+    margin-right: 3.5Rem
+}
+
+.btn-danger-me {
+    background-color: #71132f;
+    color: #fff;
+    border-color: #370413;
+}
+
+.btn-create-margin{
+    margin-top: 1Rem;
+}
+
+.flexbox-container{
+    height: 300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    align-content: space-between;
+}

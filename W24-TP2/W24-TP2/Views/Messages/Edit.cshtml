@@ -1,0 +1,63 @@
+﻿@model W24_TP2.Models.Message
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Message</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="MsgId" value="@ViewData["MsgId"]" />
+            <input type="hidden" asp-for="SujetId" value="@ViewData["SujetId"]"/>
+            <div class="form-group">
+                <label asp-for="MsgText" class="control-label"></label>
+                <textarea asp-for="MsgText" class="form-control" ></textarea>
+                <span asp-validation-for="MsgText" class="text-danger"></span>
+            </div>
+            @if (User.IsInRole("zeMasterAdmin"))
+            {
+                <div class="form-group">
+                    <label asp-for="SujetId" class="control-label"></label>
+                    <input asp-for="SujetId" class="form-control" value="@ViewData["SujetId"]"/>
+                    <span asp-validation-for="SujetId" class ="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserId" class="control-label"></label>
+                    <input asp-for="UserId" class="form-control" value="@ViewData["UserId"]"/>
+                    <span asp-validation-for="UserId" class="text-danger"></span>
+                </div>            
+                <div class="form-group">
+                    <label asp-for="MsgDate" class="control-label"></label>
+                    <input asp-for="MsgDate" class="form-control" />
+                    <span asp-validation-for="MsgDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MsgView" class="control-label"></label>
+                    <input asp-for="MsgView" class="form-control"/>
+                    <span asp-validation-for="MsgView" class="text-danger"></span>
+                </div>               
+                <div class="form-group form-check">
+                    <label  asp-for="MsgActif" class="form-check-label"></label>
+                    <input class="form-check-input" asp-for="MsgActif"/>
+                    <span asp-validation-for="MsgActif" class ="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-secondary cat-btn2 btn-color" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="text-grey" asp-controller="Messages" asp-action="Index_mess_par_suj" asp-route-MsgId="@ViewData["MsgId"]" asp-route-SujetId="@ViewData["SujetId"]"> Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

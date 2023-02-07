@@ -1,0 +1,54 @@
+﻿@model W24_TP2.Models.Sujet
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Sujet</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SujetTexte)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SujetTexte)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SujetDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SujetDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SujetView)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SujetView)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.SujetActif)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.SujetActif)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cat)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cat.CatId)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.SujetId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

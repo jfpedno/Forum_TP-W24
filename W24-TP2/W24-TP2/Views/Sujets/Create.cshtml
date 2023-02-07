@@ -1,0 +1,49 @@
+﻿@using W24_TP2.Models
+@*@model W24_TP2.ViewModels.MonSujet*@
+@model W24_TP2.Models.Sujet
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Sujet</h4>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group"> 
+               @*On passe le CatId caché pour l'avoir par défault dans le form pour la validation dans le controller*@
+                <input type="hidden" asp-for="CatId" value="@ViewData["CatId"]" />           
+            </div>
+            <div class="form-group">
+                <label asp-for="SujetTexte" class="control-label"></label>
+                <textarea asp-for="SujetTexte" class="form-control" ></textarea>
+                <span asp-validation-for="SujetTexte" class="text-danger"></span>
+            </div>
+            @*On permet à l'admin créer mais de laisser le message inactif donc caché des utilisateurs pour l'instant*@
+            @if (User.IsInRole("zeMasterAdmin"))
+            {
+                <div class="form-group form-check">
+                    <label asp-for="SujetActif" class="form-check-label"></label>
+                    <input class="form-check-input" asp-for="SujetActif"/>
+                    <span asp-validation-for="SujetActif" class ="text-danger"></span>
+                </div>
+            }
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-secondary cat-btn2 btn-color btn-create-margin" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    @*je comprends pas pourtant j'ai le CatId dans l'url et par defaut si null le page index à 1 mais ça m'amène à une page sans sujet??? au moins ça plante pas*@
+    <a class="text-grey" asp-controller="Sujets" asp-action="Index_sujets_par_cat" asp-route-CatId="@ViewData["CatId"]">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
